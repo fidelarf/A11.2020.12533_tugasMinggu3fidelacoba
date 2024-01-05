@@ -116,42 +116,14 @@ tab1, tab2 = st.tabs(["Single-predict", "Multi-predict"])
 with tab1:
   st.sidebar.header("**User Input** Sidebar")
 
-  # Ganti warna latar belakang dan teks
-st.markdown(
-    """
-    <style>
-    body {
-        background-color: #FFC0CB;
-        color: white;
-    }
-    </style>
-    """,
-    unsafe_allow_html=True,
-)
-
-# Ganti warna latar belakang tab
-st.markdown(
-    """
-    <style>
-    .streamlit-tabs {
-        background-color: #FF69B4;
-    }
-    </style>
-    """,
-    unsafe_allow_html=True,
-)
-
-# Ganti warna teks tombol
-st.markdown(
-    """
-    <style>
-    .stButton {
-        color: white;
-    }
-    </style>
-    """,
-    unsafe_allow_html=True,
-)
+  st.markdown(
+      """
+      <style>
+      .st-dl { background-color: #FF5733; }
+      </style>
+      """,
+      unsafe_allow_html=True
+  )
 
   age = st.sidebar.number_input(label=":blue[**Age**]", min_value=df_final['age'].min(), max_value=df_final['age'].max())
   st.sidebar.write(f":orange[Min] value: :orange[**{df_final['age'].min()}**], :red[Max] value: :red[**{df_final['age'].max()}**]")
