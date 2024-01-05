@@ -106,7 +106,7 @@ st.set_page_config(
 )
 
 st.title("Hungarian Heart Disease")
-st.write(f"**_Model's Accuracy_** :  :green[**{accuracy}**]% (:pink[_Deployment Heart Disease_])")
+st.write(f"**_Model's Accuracy_** :  :green[**91.4**]%") (:yellow)")
 st.write("")
 
 tab1, tab2 = st.tabs(["Single-predict", "Multi-predict"])
