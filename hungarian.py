@@ -109,6 +109,8 @@ st.title("Hungarian Heart Disease")
 st.write(f"**_Model's Accuracy_** :  :green[**90.4**]%")
 st.write("")
 
+st.image['heart_disease']
+
 tab1, tab2 = st.tabs(["Single-predict", "Multi-predict"])
 
 with tab1:
