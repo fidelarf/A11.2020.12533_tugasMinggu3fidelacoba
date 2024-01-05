@@ -1,3 +1,5 @@
+# Import library
+
 import itertools
 import pandas as pd
 import numpy as np
@@ -7,8 +9,14 @@ import streamlit as st
 import time
 import pickle
 
+# Library yang digunakan antara lain itertools untuk manipulasi iterasi, pandas dan numpy untuk manipulasi data, 
+SMOTE untuk oversampling, accuracy_score untuk mengukur akurasi, streamlit untuk membuat aplikasi web, dan pickle untuk memuat model dari file.
+
 # df = pd.read_csv("hungarian.data", names=columns, header=None)
 
+# Membaca data
+# Data dibaca dari file "hungarian.data" dan diubah menjadi DataFrame menggunakan itertools. 
+Data tersebut dipecah menjadi blok-blok 10 baris yang memiliki panjang 76 karakter.
 with open("hungarian.data", encoding='Latin1') as file:
   lines = [line.strip() for line in file]
 
@@ -19,14 +27,22 @@ data = itertools.takewhile(
 
 df = pd.DataFrame.from_records(data)
 
+# Praproses Data
+# Praproses data dilakukan dengan menghilangkan kolom terakhir, 
+mengubah tipe data menjadi float, dan mengganti nilai -9.0 dengan NaN.
 df = df.iloc[:, :-1]
 df = df.drop(df.columns[0], axis=1)
 df = df.astype(float)
 
 df.replace(-9.0, np.NaN, inplace=True)
 
+# seleksi kolom
+# Seleksi kolom-kolom tertentu yang dianggap relevan untuk analisis.
+
 df_selected = df.iloc[:, [1, 2, 7, 8, 10, 14, 17, 30, 36, 38, 39, 42, 49, 56]]
 
+# Mapping nama kolom
+# Pemetaan nama kolom menggunakan dictionary dan proses renaming.
 column_mapping = {
   2: 'age',
   3: 'sex',
@@ -49,6 +65,8 @@ df_selected.rename(columns=column_mapping, inplace=True)
 columns_to_drop = ['ca', 'slope','thal']
 df_selected = df_selected.drop(columns_to_drop, axis=1)
 
+# Pengisian Missing Values
+Menghitung nilai rata-rata untuk mengisi missing values dan membersihkan duplikat baris.
 meanTBPS = df_selected['trestbps'].dropna()
 meanChol = df_selected['chol'].dropna()
 meanfbs = df_selected['fbs'].dropna()
@@ -82,14 +100,20 @@ fill_values = {
 df_clean = df_selected.fillna(value=fill_values)
 df_clean.drop_duplicates(inplace=True)
 
+# Oversampling
+# Melakukan oversampling menggunakan SMOTE untuk menangani ketidakseimbangan kelas.
 X = df_clean.drop("target", axis=1)
 y = df_clean['target']
 
 smote = SMOTE(random_state=42)
 X, y = smote.fit_resample(X, y)
 
+# Memuat Model
+# Memuat model dari file "xgb_model.pkl" yang sebelumnya sudah dilatih.
 model = pickle.load(open("xgb_model.pkl", 'rb'))
 
+# Memprediksi dan Mengukur Akurasi
+# Melakukan prediksi menggunakan model dan mengukur akurasi.
 y_pred = model.predict(X)
 accuracy = accuracy_score(y, y_pred)
 accuracy = round((accuracy * 100), 2)
@@ -99,7 +123,9 @@ df_final['target'] = y
 
 # ========================================================================================================================================================================================
 
+# Membuat Aplikasi Web Streamlit
 # STREAMLIT
+# Konfigurasi Halaman
 st.set_page_config(
   page_title = "Hungarian Heart Disease",
   page_icon = ":heart:"
@@ -113,9 +139,12 @@ st.image('heart_disease.png')
 
 tab1, tab2 = st.tabs(["Single-predict", "Multi-predict"])
 
+# Tab 1 Single Predict
 with tab1:
+  # Membuat Sidebar dan Input User
   st.sidebar.header("**User Input** Sidebar")
 
+  # Mengubah Warna Tampilan
   st.markdown(
       """
       <style>
@@ -204,6 +233,7 @@ with tab1:
   st.sidebar.write(f":orange[Min] value: :orange[**{df_final['oldpeak'].min()}**], :red[Max] value: :red[**{df_final['oldpeak'].max()}**]")
   st.sidebar.write("")
 
+  # Membuat DataFrame untuk Iput User
   data = {
     'Age': age,
     'Sex': sex_sb,
@@ -231,6 +261,8 @@ with tab1:
   predict_btn = st.button("**Predict**", type="primary")
 
   st.write("")
+
+  # Menampilkan Hasil Prediksi
   if predict_btn:
     inputs = [[age, sex, cp, trestbps, chol, fbs, restecg, thalach, exang, oldpeak]]
     prediction = model.predict(inputs)[0]
@@ -263,9 +295,11 @@ with tab1:
   st.subheader("Prediction:")
   st.subheader(result)
 
+# Tab 2 Multi Predict
 with tab2:
   st.header("Predict multiple data:")
 
+  # Membuat Tombol Upload CSV dan Menampilkan Hasil
   sample_csv = df_final.iloc[:5, :-1].to_csv(index=False).encode('utf-8')
 
   st.write("")
