@@ -9,14 +9,12 @@ import streamlit as st
 import time
 import pickle
 
-# Library yang digunakan antara lain itertools untuk manipulasi iterasi, pandas dan numpy untuk manipulasi data, 
-SMOTE untuk oversampling, accuracy_score untuk mengukur akurasi, streamlit untuk membuat aplikasi web, dan pickle untuk memuat model dari file.
+# Library yang digunakan antara lain itertools untuk manipulasi iterasi, pandas dan numpy untuk manipulasi data, SMOTE untuk oversampling, accuracy_score untuk mengukur akurasi, streamlit untuk membuat aplikasi web, dan pickle untuk memuat model dari file.
 
 # df = pd.read_csv("hungarian.data", names=columns, header=None)
 
 # Membaca data
-# Data dibaca dari file "hungarian.data" dan diubah menjadi DataFrame menggunakan itertools. 
-Data tersebut dipecah menjadi blok-blok 10 baris yang memiliki panjang 76 karakter.
+# Data dibaca dari file "hungarian.data" dan diubah menjadi DataFrame menggunakan itertools. Data tersebut dipecah menjadi blok-blok 10 baris yang memiliki panjang 76 karakter.
 with open("hungarian.data", encoding='Latin1') as file:
   lines = [line.strip() for line in file]
 
@@ -28,8 +26,7 @@ data = itertools.takewhile(
 df = pd.DataFrame.from_records(data)
 
 # Praproses Data
-# Praproses data dilakukan dengan menghilangkan kolom terakhir, 
-mengubah tipe data menjadi float, dan mengganti nilai -9.0 dengan NaN.
+# Praproses data dilakukan dengan menghilangkan kolom terakhir, mengubah tipe data menjadi float, dan mengganti nilai -9.0 dengan NaN.
 df = df.iloc[:, :-1]
 df = df.drop(df.columns[0], axis=1)
 df = df.astype(float)
