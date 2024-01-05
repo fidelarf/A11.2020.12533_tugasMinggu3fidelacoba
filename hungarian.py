@@ -119,7 +119,7 @@ with tab1:
   st.markdown(
       """
       <style>
-      .st-dl { background-color: #FF5733; }
+      .st-dl { background-color: #E3CAAF; }
       </style>
       """,
       unsafe_allow_html=True
