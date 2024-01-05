@@ -113,6 +113,43 @@ st.image('heart_disease.png')
 
 tab1, tab2 = st.tabs(["Single-predict", "Multi-predict"])
 
+# Ganti warna latar belakang dan teks
+st.markdown(
+    """
+    <style>
+    body {
+        background-color: #FFC0CB;
+        color: white;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True,
+)
+
+# Ganti warna latar belakang tab
+st.markdown(
+    """
+    <style>
+    .streamlit-tabs {
+        background-color: #FF69B4;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True,
+)
+
+# Ganti warna teks tombol
+st.markdown(
+    """
+    <style>
+    .stButton {
+        color: white;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True,
+)
+
 with tab1:
   st.sidebar.header("**User Input** Sidebar")
 
