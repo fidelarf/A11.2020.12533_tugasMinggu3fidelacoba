@@ -63,7 +63,7 @@ columns_to_drop = ['ca', 'slope','thal']
 df_selected = df_selected.drop(columns_to_drop, axis=1)
 
 # Pengisian Missing Values
-Menghitung nilai rata-rata untuk mengisi missing values dan membersihkan duplikat baris.
+# Menghitung nilai rata-rata untuk mengisi missing values dan membersihkan duplikat baris.
 meanTBPS = df_selected['trestbps'].dropna()
 meanChol = df_selected['chol'].dropna()
 meanfbs = df_selected['fbs'].dropna()
